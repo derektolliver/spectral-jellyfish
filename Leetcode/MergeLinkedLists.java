@@ -6,7 +6,7 @@
  *     ListNode(int x) { val = x; }
  * }
  */
-public class MergeLinkedLists {
+public class MergeLinkedLists  {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode temp = new ListNode(0);
         ListNode node = temp;
