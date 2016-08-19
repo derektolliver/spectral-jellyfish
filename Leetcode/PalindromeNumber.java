@@ -8,7 +8,7 @@ public class PalindromeNumber {
                 rev = rev * 10 + x % 10;
                 x /= 10;
             }
-            return x == rev || x == rev % 10;
+            return x == rev || x == rev / 10;
         }
     }
 }
