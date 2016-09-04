@@ -15,3 +15,15 @@ public class LengthOfLastWord {
         return 0;
     }
 }
+
+/*
+public class Solution {
+    public int lengthOfLastWord(String s) {
+        String[] wordList = s.split("\\s+");
+        if (wordList.length > 0) {
+            return wordList[wordList.length - 1].length();
+        }
+        return 0;
+    }
+}
+ */
