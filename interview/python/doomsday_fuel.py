@@ -80,7 +80,6 @@ def answer(m):
         total = sum(m[row])
         if total == 0:
             if nums_and_dens[row] == (0, 0):
-                print("setting " + str(probability))
                 nums_and_dens[row] = probability
             else:
                 num = (probability[0] * nums_and_dens[row][1]) + (probability[1] * nums_and_dens[row][0])
