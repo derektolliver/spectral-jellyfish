@@ -1,41 +1,75 @@
-from collections import defaultdict
+from collections import deque
+
+# from collections import defaultdict
+#
+# def answer(m):
+#     # Determine which rows are terminal states
+#     states = find_states(m)
+#
+#     # Find fractions for terminals
+#     fractions = find_fractions(m, states)
+#     print(fractions)
+#
+#
+# def find_states(m):
+#     # Find all terminal rows
+#     states = []
+#     for r in range(0, len(m)):
+#         all_zeroes = True
+#         for c in m[r]:
+#             if c != 0:
+#                 all_zeroes = False
+#                 break
+#         states.append(all_zeroes)
+#     return states
+#
+# def find_fractions(m, states):
+#     fractions = set_dict_values(m)
+#     for r in range(0 , len(m)):
+#         total = 0
+#         for v in m[r]:
+#             total += v
+#         fractions[r] = (m[r][r], total)
+#     return fractions
+#
+# def set_dict_values(m):
+#     # Set all rows to (0, 0) tuple
+#     fractions = defaultdict()
+#     for r in range(0, len(m)):
+#         fractions[r] = (0, 0)
+#     return fractions
 
 def answer(m):
-    # Determine which rows are terminal states
-    states = find_states(m)
-
-    # Find fractions for terminals
-    fractions = find_fractions(m, states)
-    print(fractions)
-
-
-def find_states(m):
-    # Find all terminal rows
-    states = []
+    nums_and_dens = dict()
     for r in range(0, len(m)):
-        all_zeroes = True
-        for c in m[r]:
-            if c != 0:
-                all_zeroes = False
-                break
-        states.append(all_zeroes)
-    return states
+        if sum(m[r]) == 0:
+            nums_and_dens[r] = (0, 0)
 
-def find_fractions(m, states):
-    fractions = set_dict_values(m)
-    for r in range(0 , len(m)):
-        total = 0
-        for v in m[r]:
-            total += v
-        fractions[r] = (m[r][r], total)
-    return fractions
+    states = deque()
+    probabilities = deque()
+    total = sum(m[0])
 
-def set_dict_values(m):
-    # Set all rows to (0, 0) tuple
-    fractions = defaultdict()
-    for r in range(0, len(m)):
-        fractions[r] = (0, 0)
-    return fractions
+    states.appendleft(0)
+    probabilities.appendleft((1,1))
+    while len(states) > 0:
+        row = states.popleft()
+        prob = probabilities.popleft()
+        if row in nums_and_dens:
+            if nums_and_dens[row] == (0, 0):
+                nums_and_dens[row] = prob
+            else:
+                num = (prob[0] * nums_and_dens[row][1]) + (prob[1] * nums_and_dens[row][0])
+                denom = prob[1] * nums_and_dens[row][1]
+                nums_and_dens[row] = (num, denom)
+        else:
+            for index in range(0, len(m[row])):
+            if index > 0:
+                states.appendleft(index)
+                probabilities.appendleft((m[0][index], total))
+
+
+
+
 
 if __name__ == "__main__":
     test = [
