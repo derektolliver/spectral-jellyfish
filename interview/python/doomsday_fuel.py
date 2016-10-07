@@ -44,31 +44,76 @@ def answer(m):
     for r in range(0, len(m)):
         if sum(m[r]) == 0:
             nums_and_dens[r] = (0, 0)
+    visited = set()
+    # states = deque()
+    # probabilities = deque()
+    #
+    # states.appendleft(0)
+    # probabilities.appendleft((1,1))
+    # curr_prob = (1, 1)
+    # while len(states) > 0:
+    #     row = states.popleft()
+    #     total = sum(m[row])
+    #     prob = probabilities.popleft()
+    #     curr_prob = (curr_prob[0] * prob[0], curr_prob[1] * prob[1])
+    #     print(curr_prob)
+    #     if row not in nums_and_dens:
+    #         visited.add(row)
+    #         for index in range(0, len(m[row])):
+    #             if m[row][index] > 0 and index not in visited:
+    #                 states.appendleft(index)
+    #                 probabilities.appendleft((m[0][index], total))
+    #     else:
+    #         if nums_and_dens[row] == (0, 0):
+    #             nums_and_dens[row] = curr_prob
+    #         else:
+    #             num = (curr_prob[0] * nums_and_dens[row][1]) + (curr_prob[1] * nums_and_dens[row][0])
+    #             denom = curr_prob[1] * nums_and_dens[row][1]
+    #             nums_and_dens[row] = (num, denom)
+    #
+    # result = []
+    # for s in nums_and_dens:
+    #     result.append(nums_and_dens[s][0])
+    # result.append(sum(result))
 
-    states = deque()
-    probabilities = deque()
-    total = sum(m[0])
-
-    states.appendleft(0)
-    probabilities.appendleft((1,1))
-    while len(states) > 0:
-        row = states.popleft()
-        prob = probabilities.popleft()
-        if row in nums_and_dens:
+    def dfs(row, probability):
+        total = sum(m[row])
+        if total == 0:
             if nums_and_dens[row] == (0, 0):
-                nums_and_dens[row] = prob
+                print("setting " + str(probability))
+                nums_and_dens[row] = probability
             else:
-                num = (prob[0] * nums_and_dens[row][1]) + (prob[1] * nums_and_dens[row][0])
-                denom = prob[1] * nums_and_dens[row][1]
+                num = (probability[0] * nums_and_dens[row][1]) + (probability[1] * nums_and_dens[row][0])
+                denom = probability[1] * nums_and_dens[row][1]
                 nums_and_dens[row] = (num, denom)
-        else:
-            for index in range(0, len(m[row])):
-            if index > 0:
-                states.appendleft(index)
-                probabilities.appendleft((m[0][index], total))
+            return
+        visited.add(row)
+        for index in range(len(m[row])):
+            if m[row][index] > 0 and index not in visited:
+                dfs(index, (probability[0] * m[row][index], probability[1] * total))
 
+    dfs(0, (1, 1))
+    result = []
+    for elem in nums_and_dens:
+        result.append(nums_and_dens[elem][0])
+    result.append(sum(result))
 
+    return result
 
+# def dfs(row, probability):
+#     total = sum(m[row])
+#     if total == 0:
+#         if nums_and_dens == (0, 0):
+#             nums_and_dens[row] = probability
+#         else:
+#             num = (probability[0] * nums_and_dens[row][1]) + (probability[1] * nums_and_dens[row][0])
+#             denom = probability[1] * nums_and_dens[row][1]
+#             nums_and_dens[row] = (num, denom)
+#         return
+#     visited.add(row)
+#     for index in range(m[row]):
+#         if m[row][index] > 0 and index not in visited:
+#             dfs(index, (probability[0] * m[row][index], probability[1] * total))
 
 
 if __name__ == "__main__":
@@ -80,4 +125,4 @@ if __name__ == "__main__":
         [0,0,0,0,0,0],  # s4 is terminal
         [0,0,0,0,0,0]]  # s5 is terminal
 
-    answer(test)
+    print(answer(test))
