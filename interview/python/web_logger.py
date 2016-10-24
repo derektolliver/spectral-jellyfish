@@ -18,10 +18,9 @@ class WebLogger(object):
 
     def prune():
         last_five_mins = time.time() - SECONDS_IN_FIVE
-        while self.log[0] < last_five_mins:
+        while len(self.log) > 0 and self.log[0] < last_five_mins:
             deque.popleft()
 
 
 if __name__ == "__main__":
     logger = WebLogger()
-    
