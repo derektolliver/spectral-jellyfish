@@ -8,15 +8,15 @@ class WebLogger(object):
     __init__(self):
         self.log = deque()
 
-    def log():
+    def log(self):
         prune()
         self.log.append(time.time())
 
-    def last_five():
+    def last_five(self):
         prune()
         return len(self.log)
 
-    def prune():
+    def prune(self):
         last_five_mins = time.time() - SECONDS_IN_FIVE
         while len(self.log) > 0 and self.log[0] < last_five_mins:
             deque.popleft()
