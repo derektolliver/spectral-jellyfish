@@ -8,7 +8,7 @@ class WebLogger(object):
     __init__(self):
         self.log = deque()
 
-    def log(self):
+    def log_hit(self):
         prune()
         self.log.append(time.time())
 
