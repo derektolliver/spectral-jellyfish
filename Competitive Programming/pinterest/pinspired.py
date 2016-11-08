@@ -6,10 +6,8 @@ def pun():
         score = 0
         sentence = [elem for elem in input().split()]
         for word in sentence:
-            for j in range(0, len(word) - 3):
-                if len(word) >= 3 and word[j:j + 3].lower() == "pin" and word not in non_puns:
-                    score += 1
-                    break
+            if "pin" in word.lower() and word.lower() not in non_puns:
+                score += 1
         print(score)
 
 if __name__ == "__main__":
